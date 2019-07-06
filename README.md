@@ -1,2 +1,3 @@
-# generative-art
-A collection of generative art projects
+# Generative Art
+
+A collection of generative art projects.
