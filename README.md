@@ -1,3 +1,3 @@
-# Generative Art
+# Algorithmic Art
 
-A collection of generative art projects.
+A collection of algorithmic art projects.
