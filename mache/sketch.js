@@ -3,6 +3,7 @@ const CANVAS_HEIGHT = 800;
 
 const TRIANGLE_SIDE_LENGTH = 50;
 const DISPLACEMENT_LIMIT = Math.round(TRIANGLE_SIDE_LENGTH / 4);
+const COLOUR_VARIATION_LIMIT = 7;
 const SQRT_3 = 1.732;
 
 const SW_COLOUR = [0, 0, 0];
@@ -134,15 +135,15 @@ function setup() {
         let currentRed = Math.round(
             (NE_COLOUR[0] - SW_COLOUR[0]) * currentTriangleProportion
             + SW_COLOUR[0]
-        ) + random(-10,11);
+        ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
         let currentGreen = Math.round(
             (NE_COLOUR[1] - SW_COLOUR[1]) * currentTriangleProportion
             + SW_COLOUR[1]
-        ) + random(-10,11);
+        ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
         let currentBlue = Math.round(
             (NE_COLOUR[2] - SW_COLOUR[2]) * currentTriangleProportion
             + SW_COLOUR[2]
-        ) + random(-10,11);
+        ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
         stroke(currentRed, currentGreen, currentBlue);
         fill(currentRed, currentGreen, currentBlue);
 
