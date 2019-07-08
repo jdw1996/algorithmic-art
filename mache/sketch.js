@@ -130,19 +130,19 @@ function setup() {
         let neCorner = new Point(CANVAS_WIDTH, 0);
         const CANVAS_DIAGONAL_LENGTH = pointDistance(swCorner, neCorner);
         let currentTriangleProportion =
-            pointDistance(currentTriangle.point3, swCorner)
+            pointDistance(currentTriangle.point3, neCorner)
             / CANVAS_DIAGONAL_LENGTH;
         let currentRed = Math.round(
-            (NE_COLOUR[0] - SW_COLOUR[0]) * currentTriangleProportion
-            + SW_COLOUR[0]
+            (SW_COLOUR[0] - NE_COLOUR[0]) * currentTriangleProportion
+            + NE_COLOUR[0]
         ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
         let currentGreen = Math.round(
-            (NE_COLOUR[1] - SW_COLOUR[1]) * currentTriangleProportion
-            + SW_COLOUR[1]
+            (SW_COLOUR[1] - NE_COLOUR[1]) * currentTriangleProportion
+            + NE_COLOUR[1]
         ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
         let currentBlue = Math.round(
-            (NE_COLOUR[2] - SW_COLOUR[2]) * currentTriangleProportion
-            + SW_COLOUR[2]
+            (SW_COLOUR[2] - NE_COLOUR[2]) * currentTriangleProportion
+            + NE_COLOUR[2]
         ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
         stroke(currentRed, currentGreen, currentBlue);
         fill(currentRed, currentGreen, currentBlue);
