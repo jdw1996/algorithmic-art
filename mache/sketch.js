@@ -9,6 +9,10 @@ const SQRT_3 = 1.732;
 const SW_COLOUR = [0, 0, 0];
 const NE_COLOUR = [255, 255, 255];
 
+let canvas = null;
+let points = [];
+let triangles = [];
+
 class Point {
     constructor(x, y) {
         this.x = x;
@@ -31,12 +35,9 @@ function pointDistance(point1, point2) {
 }
 
 function setup() {
-    let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     canvas.parent("mycanvas");
     background(0);
-
-    let points = [];
-    let triangles = [];
 
     let currentX = -TRIANGLE_SIDE_LENGTH;
     let currentY = -TRIANGLE_SIDE_LENGTH;
