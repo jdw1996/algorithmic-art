@@ -4,6 +4,7 @@ const CANVAS_HEIGHT = 800;
 const TRIANGLE_SIDE_LENGTH = 50;
 const DISPLACEMENT_LIMIT = Math.round(TRIANGLE_SIDE_LENGTH / 4);
 const COLOUR_VARIATION_LIMIT = 7;
+const GRADIENT_SMOOTHNESS = 0.04;
 const SQRT_3 = 1.732;
 
 const SW_COLOUR = [0, 0, 0];
@@ -132,7 +133,8 @@ function setup() {
         const CANVAS_DIAGONAL_LENGTH = pointDistance(swCorner, neCorner);
         let currentTriangleProportion =
             pointDistance(currentTriangle.point3, neCorner)
-            / CANVAS_DIAGONAL_LENGTH;
+            / CANVAS_DIAGONAL_LENGTH
+            + random(-GRADIENT_SMOOTHNESS, GRADIENT_SMOOTHNESS);
         let currentRed = Math.round(
             (SW_COLOUR[0] - NE_COLOUR[0]) * currentTriangleProportion
             + NE_COLOUR[0]
