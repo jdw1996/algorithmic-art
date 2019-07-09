@@ -35,11 +35,7 @@ function pointDistance(point1, point2) {
     ));
 }
 
-function setup() {
-    canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-    canvas.parent("mycanvas");
-    background(0);
-
+function generatePoints() {
     let currentX = -TRIANGLE_SIDE_LENGTH;
     let currentY = -TRIANGLE_SIDE_LENGTH;
     let columnNumber = 0;
@@ -98,6 +94,14 @@ function setup() {
         );
         columnNumber += 1;
     }
+}
+
+function setup() {
+    canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    canvas.parent("mycanvas");
+    background(0);
+
+    generatePoints();
 
     for (let i = 0; i < points.length; i++) {
         let currentColumn = points[i];
