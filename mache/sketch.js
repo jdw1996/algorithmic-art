@@ -96,13 +96,7 @@ function generatePoints() {
     }
 }
 
-function setup() {
-    canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-    canvas.parent("mycanvas");
-    background(0);
-
-    generatePoints();
-
+function adjustPoints() {
     for (let i = 0; i < points.length; i++) {
         let currentColumn = points[i];
         for (let j = 0; j < currentColumn.length; j++) {
@@ -125,7 +119,9 @@ function setup() {
                 + CANVAS_HEIGHT / 2;
         }
     }
+}
 
+function displayTriangles() {
     // Draw the triangles.
     noStroke();
     for (let i = 0; i < triangles.length; i++) {
@@ -160,6 +156,16 @@ function setup() {
             currentTriangle.point3.x, currentTriangle.point3.y
         );
     }
+}
+
+function setup() {
+    canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+    canvas.parent("mycanvas");
+    background(0);
+
+    generatePoints();
+    adjustPoints();
+    displayTriangles();
 }
 
 function draw() {}
