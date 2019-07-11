@@ -18,6 +18,8 @@ class Point {
     constructor(x, y) {
         this.x = x;
         this.y = y;
+        this.displayedX = x;
+        this.displayedY = y;
     }
 }
 
@@ -103,8 +105,12 @@ function adjustPoints() {
             let currentPoint = currentColumn[j];
 
             // Randomly perturb the points.
-            currentPoint.x += random(-DISPLACEMENT_LIMIT, DISPLACEMENT_LIMIT);
-            currentPoint.y += random(-DISPLACEMENT_LIMIT, DISPLACEMENT_LIMIT);
+            currentPoint.displayedX =
+                currentPoint.x
+                + random(-DISPLACEMENT_LIMIT, DISPLACEMENT_LIMIT);
+            currentPoint.displayedY =
+                currentPoint.y
+                + random(-DISPLACEMENT_LIMIT, DISPLACEMENT_LIMIT);
 
             // Push the points farther apart on the right.
             currentPoint.x = round(
@@ -116,6 +122,18 @@ function adjustPoints() {
             currentPoint.y = round(
                 (currentPoint.y - CANVAS_HEIGHT / 2)
                 * Math.pow(currentPoint.x + CANVAS_WIDTH, 2)
+                / Math.pow(CANVAS_WIDTH, 2)
+                + CANVAS_HEIGHT / 2
+            );
+            currentPoint.displayedX = round(
+                (currentPoint.displayedX < 0 ? -1 : 1)
+                * Math.pow(currentPoint.displayedX, 3)
+                / Math.pow(CANVAS_WIDTH, 2)
+                - TRIANGLE_SIDE_LENGTH
+            );
+            currentPoint.displayedY = round(
+                (currentPoint.displayedY - CANVAS_HEIGHT / 2)
+                * Math.pow(currentPoint.displayedX + CANVAS_WIDTH, 2)
                 / Math.pow(CANVAS_WIDTH, 2)
                 + CANVAS_HEIGHT / 2
             );
@@ -153,9 +171,9 @@ function displayTriangles() {
         fill(currentRed, currentGreen, currentBlue);
 
         triangle(
-            currentTriangle.point1.x, currentTriangle.point1.y,
-            currentTriangle.point2.x, currentTriangle.point2.y,
-            currentTriangle.point3.x, currentTriangle.point3.y
+            currentTriangle.point1.displayedX, currentTriangle.point1.displayedY,
+            currentTriangle.point2.displayedX, currentTriangle.point2.displayedY,
+            currentTriangle.point3.displayedX, currentTriangle.point3.displayedY
         );
     }
 }
