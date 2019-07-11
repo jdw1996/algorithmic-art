@@ -2,7 +2,7 @@ const CANVAS_WIDTH = 1200;
 const CANVAS_HEIGHT = 800;
 
 const TRIANGLE_SIDE_LENGTH = 50;
-const DISPLACEMENT_LIMIT = Math.round(TRIANGLE_SIDE_LENGTH / 4);
+const DISPLACEMENT_LIMIT = TRIANGLE_SIDE_LENGTH / 4;
 const COLOUR_VARIATION_LIMIT = 7;
 const GRADIENT_SMOOTHNESS = 0.04;
 const SQRT_3 = 1.732;
@@ -30,9 +30,9 @@ class Triangle {
 }
 
 function pointDistance(point1, point2) {
-    return Math.round(Math.sqrt(
+    return Math.sqrt(
         Math.pow(point1.x - point2.x, 2) + Math.pow(point1.y - point2.y, 2)
-    ));
+    );
 }
 
 function generatePoints() {
@@ -86,11 +86,11 @@ function generatePoints() {
         points.push(currentColumn);
 
         // Prepare to handle the next column.
-        currentX += Math.round(TRIANGLE_SIDE_LENGTH * SQRT_3 / 2);
+        currentX += round(TRIANGLE_SIDE_LENGTH * SQRT_3 / 2);
         currentY = -TRIANGLE_SIDE_LENGTH + (
             columnNumber % 2 === 1
             ? 0
-            : Math.round(TRIANGLE_SIDE_LENGTH / 2)
+            : round(TRIANGLE_SIDE_LENGTH / 2)
         );
         columnNumber += 1;
     }
@@ -107,16 +107,18 @@ function adjustPoints() {
             currentPoint.y += random(-DISPLACEMENT_LIMIT, DISPLACEMENT_LIMIT);
 
             // Push the points farther apart on the right.
-            currentPoint.x =
+            currentPoint.x = round(
                 (currentPoint.x < 0 ? -1 : 1)
                 * Math.pow(currentPoint.x, 3)
                 / Math.pow(CANVAS_WIDTH, 2)
-                - TRIANGLE_SIDE_LENGTH;
-            currentPoint.y =
+                - TRIANGLE_SIDE_LENGTH
+            );
+            currentPoint.y = round(
                 (currentPoint.y - CANVAS_HEIGHT / 2)
                 * Math.pow(currentPoint.x + CANVAS_WIDTH, 2)
                 / Math.pow(CANVAS_WIDTH, 2)
-                + CANVAS_HEIGHT / 2;
+                + CANVAS_HEIGHT / 2
+            );
         }
     }
 }
@@ -135,15 +137,15 @@ function displayTriangles() {
             pointDistance(currentTriangle.point3, neCorner)
             / CANVAS_DIAGONAL_LENGTH
             + random(-GRADIENT_SMOOTHNESS, GRADIENT_SMOOTHNESS);
-        let currentRed = Math.round(
+        let currentRed = round(
             (SW_COLOUR[0] - NE_COLOUR[0]) * currentTriangleProportion
             + NE_COLOUR[0]
         ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
-        let currentGreen = Math.round(
+        let currentGreen = round(
             (SW_COLOUR[1] - NE_COLOUR[1]) * currentTriangleProportion
             + NE_COLOUR[1]
         ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
-        let currentBlue = Math.round(
+        let currentBlue = round(
             (SW_COLOUR[2] - NE_COLOUR[2]) * currentTriangleProportion
             + NE_COLOUR[2]
         ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
