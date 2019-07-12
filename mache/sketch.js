@@ -190,7 +190,6 @@ function setup() {
 
     triangleSideLengthInput = document.getElementById("TriangleSideLength");
     triangleSideLength = round(triangleSideLengthInput.value);
-    console.log(triangleSideLength);
     triangleSideLength = min(
         MAX_TRIANGLE_SIDE_LENGTH,
         max(MIN_TRIANGLE_SIDE_LENGTH, triangleSideLength)
@@ -201,5 +200,3 @@ function setup() {
     adjustPoints();
     displayTriangles();
 }
-
-function draw() {}
