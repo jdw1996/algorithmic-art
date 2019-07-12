@@ -7,9 +7,11 @@
         <script src="sketch.js"></script>
     </head>
     <body>
-        <div id="controls" style="padding: 10px 0;">
-            Base triangle side length (must be in range [20, 150]): <input type="number" name="TriangleSideLength" id="TriangleSideLength" value="50" min="20" max="150">
-        </div>
+        <form style="padding: 10px 0;" target="_self">
+            Base triangle side length (must be in range [20, 150]):
+                <input type="number" name="TriangleSideLength" id="TriangleSideLength" value="50" min="20" max="150"><br>
+            <input type="submit" value="Submit">
+        </form>
         <div id="mycanvas"></div>
     </body>
 </html>

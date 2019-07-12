@@ -1,10 +1,10 @@
 const CANVAS_WIDTH = 1200;
 const CANVAS_HEIGHT = 800;
 
+const TRIANGLE_SIDE_LENGTH_NAME = "TriangleSideLength";
 const DEFAULT_TRIANGLE_SIDE_LENGTH = 50;
 const MIN_TRIANGLE_SIDE_LENGTH = 20;
 const MAX_TRIANGLE_SIDE_LENGTH = 150;
-let triangleSideLengthInput = null;
 let triangleSideLength = DEFAULT_TRIANGLE_SIDE_LENGTH;
 
 const DISPLACEMENT_LIMIT = triangleSideLength / 3;
@@ -34,6 +34,19 @@ class Triangle {
         this.point2 = point2;
         this.point3 = point3;
     }
+}
+
+function getURLParameters() {
+    // Adapted from `https://www.kevinleary.net/javascript-get-url-parameters/`.
+    let params = {};
+    let definitions = decodeURIComponent(
+        window.location.href.slice(window.location.href.indexOf("?") + 1)
+    ).split("&");
+    definitions.forEach( function(val) {
+        let parts = val.split('=', 2);
+        params[parts[0]] = parts[1];
+    } );
+    return params;
 }
 
 function pointDistance(point1, point2) {
@@ -188,12 +201,14 @@ function setup() {
     canvas.parent("mycanvas");
     background(0);
 
-    triangleSideLengthInput = document.getElementById("TriangleSideLength");
-    triangleSideLength = round(triangleSideLengthInput.value);
+    let params = getURLParameters();
+
+    triangleSideLength = round(params[TRIANGLE_SIDE_LENGTH_NAME]);
     triangleSideLength = min(
         MAX_TRIANGLE_SIDE_LENGTH,
         max(MIN_TRIANGLE_SIDE_LENGTH, triangleSideLength)
     );
+    let triangleSideLengthInput = document.getElementById(TRIANGLE_SIDE_LENGTH_NAME);
     triangleSideLengthInput.value = triangleSideLength.toString();
 
     generatePoints();
