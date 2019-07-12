@@ -1,8 +1,13 @@
 const CANVAS_WIDTH = 1200;
 const CANVAS_HEIGHT = 800;
 
-const TRIANGLE_SIDE_LENGTH = 50;
-const DISPLACEMENT_LIMIT = TRIANGLE_SIDE_LENGTH / 4;
+const DEFAULT_TRIANGLE_SIDE_LENGTH = 50;
+const MIN_TRIANGLE_SIDE_LENGTH = 20;
+const MAX_TRIANGLE_SIDE_LENGTH = 150;
+let triangleSideLengthInput = null;
+let triangleSideLength = DEFAULT_TRIANGLE_SIDE_LENGTH;
+
+const DISPLACEMENT_LIMIT = triangleSideLength / 3;
 const COLOUR_VARIATION_LIMIT = 7;
 const GRADIENT_SMOOTHNESS = 0.04;
 const SQRT_3 = 1.732;
@@ -38,20 +43,20 @@ function pointDistance(point1, point2) {
 }
 
 function generatePoints() {
-    let currentX = -TRIANGLE_SIDE_LENGTH;
-    let currentY = -TRIANGLE_SIDE_LENGTH;
+    let currentX = -triangleSideLength;
+    let currentY = -triangleSideLength;
     let columnNumber = 0;
 
-    while (currentX < CANVAS_WIDTH + 2 * TRIANGLE_SIDE_LENGTH) {
+    while (currentX < CANVAS_WIDTH + 2 * triangleSideLength) {
         let previousPointIndex = 0;
         let currentColumn = [];
         let previousColumn = points[points.length - 1];
 
-        while (currentY < CANVAS_HEIGHT + 2 * TRIANGLE_SIDE_LENGTH) {
+        while (currentY < CANVAS_HEIGHT + 2 * triangleSideLength) {
             // Create and store a new point.
             let newPoint = new Point(currentX, currentY);
             currentColumn.push(newPoint);
-            currentY += TRIANGLE_SIDE_LENGTH;
+            currentY += triangleSideLength;
 
             // If the point is at the top or far left, don't add triangles
             // around it.
@@ -88,11 +93,11 @@ function generatePoints() {
         points.push(currentColumn);
 
         // Prepare to handle the next column.
-        currentX += round(TRIANGLE_SIDE_LENGTH * SQRT_3 / 2);
-        currentY = -TRIANGLE_SIDE_LENGTH + (
+        currentX += round(triangleSideLength * SQRT_3 / 2);
+        currentY = -triangleSideLength + (
             columnNumber % 2 === 1
             ? 0
-            : round(TRIANGLE_SIDE_LENGTH / 2)
+            : round(triangleSideLength / 2)
         );
         columnNumber += 1;
     }
@@ -117,7 +122,7 @@ function adjustPoints() {
                 (currentPoint.x < 0 ? -1 : 1)
                 * Math.pow(currentPoint.x, 3)
                 / Math.pow(CANVAS_WIDTH, 2)
-                - TRIANGLE_SIDE_LENGTH
+                - triangleSideLength
             );
             currentPoint.y = round(
                 (currentPoint.y - CANVAS_HEIGHT / 2)
@@ -129,7 +134,7 @@ function adjustPoints() {
                 (currentPoint.displayedX < 0 ? -1 : 1)
                 * Math.pow(currentPoint.displayedX, 3)
                 / Math.pow(CANVAS_WIDTH, 2)
-                - TRIANGLE_SIDE_LENGTH
+                - triangleSideLength
             );
             currentPoint.displayedY = round(
                 (currentPoint.displayedY - CANVAS_HEIGHT / 2)
@@ -182,6 +187,15 @@ function setup() {
     canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
     canvas.parent("mycanvas");
     background(0);
+
+    triangleSideLengthInput = document.getElementById("TriangleSideLength");
+    triangleSideLength = round(triangleSideLengthInput.value);
+    console.log(triangleSideLength);
+    triangleSideLength = min(
+        MAX_TRIANGLE_SIDE_LENGTH,
+        max(MIN_TRIANGLE_SIDE_LENGTH, triangleSideLength)
+    );
+    triangleSideLengthInput.value = triangleSideLength.toString();
 
     generatePoints();
     adjustPoints();
