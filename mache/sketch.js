@@ -204,11 +204,14 @@ function setup() {
     let params = getURLParameters();
 
     triangleSideLength = round(params[TRIANGLE_SIDE_LENGTH_NAME]);
+    if (isNaN(triangleSideLength))
+        triangleSideLength = DEFAULT_TRIANGLE_SIDE_LENGTH;
     triangleSideLength = min(
         MAX_TRIANGLE_SIDE_LENGTH,
         max(MIN_TRIANGLE_SIDE_LENGTH, triangleSideLength)
     );
-    let triangleSideLengthInput = document.getElementById(TRIANGLE_SIDE_LENGTH_NAME);
+    let triangleSideLengthInput =
+        document.getElementById(TRIANGLE_SIDE_LENGTH_NAME);
     triangleSideLengthInput.value = triangleSideLength.toString();
 
     generatePoints();
