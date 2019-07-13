@@ -209,9 +209,12 @@ function displayTriangles() {
         fill(currentRed, currentGreen, currentBlue);
 
         triangle(
-            currentTriangle.point1.displayedX, currentTriangle.point1.displayedY,
-            currentTriangle.point2.displayedX, currentTriangle.point2.displayedY,
-            currentTriangle.point3.displayedX, currentTriangle.point3.displayedY
+            currentTriangle.point1.displayedX,
+            currentTriangle.point1.displayedY,
+            currentTriangle.point2.displayedX,
+            currentTriangle.point2.displayedY,
+            currentTriangle.point3.displayedX,
+            currentTriangle.point3.displayedY
         );
     }
 }
