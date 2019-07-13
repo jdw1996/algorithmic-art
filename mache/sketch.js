@@ -1,4 +1,11 @@
-const CANVAS_WIDTH = 1200;
+// Useful for dealing with special triangles.
+const SQRT_3 = 1.732;
+
+const CANVAS_WIDTH_NAME = "CanvasWidth";
+const DEFAULT_CANVAS_WIDTH = 1200;
+const MIN_CANVAS_WIDTH = 10;
+let canvasWidth = DEFAULT_CANVAS_WIDTH;
+
 const CANVAS_HEIGHT = 800;
 
 const TRIANGLE_SIDE_LENGTH_NAME = "TriangleSideLength";
@@ -15,7 +22,6 @@ let displacementLimit = DEFAULT_DISPLACEMENT_LIMIT;
 
 const COLOUR_VARIATION_LIMIT = 7;
 const GRADIENT_SMOOTHNESS = 0.04;
-const SQRT_3 = 1.732;
 
 const SW_COLOUR = [0, 0, 0];
 const NE_COLOUR = [255, 255, 255];
@@ -65,7 +71,7 @@ function generatePoints() {
     let currentY = -triangleSideLength;
     let columnNumber = 0;
 
-    while (currentX < CANVAS_WIDTH + 2 * triangleSideLength) {
+    while (currentX < canvasWidth + 2 * triangleSideLength) {
         let previousPointIndex = 0;
         let currentColumn = [];
         let previousColumn = points[points.length - 1];
@@ -139,25 +145,25 @@ function adjustPoints() {
             currentPoint.x = round(
                 (currentPoint.x < 0 ? -1 : 1)
                 * Math.pow(currentPoint.x, 3)
-                / Math.pow(CANVAS_WIDTH, 2)
+                / Math.pow(canvasWidth, 2)
                 - triangleSideLength
             );
             currentPoint.y = round(
                 (currentPoint.y - CANVAS_HEIGHT / 2)
-                * Math.pow(currentPoint.x + CANVAS_WIDTH, 2)
-                / Math.pow(CANVAS_WIDTH, 2)
+                * Math.pow(currentPoint.x + canvasWidth, 2)
+                / Math.pow(canvasWidth, 2)
                 + CANVAS_HEIGHT / 2
             );
             currentPoint.displayedX = round(
                 (currentPoint.displayedX < 0 ? -1 : 1)
                 * Math.pow(currentPoint.displayedX, 3)
-                / Math.pow(CANVAS_WIDTH, 2)
+                / Math.pow(canvasWidth, 2)
                 - triangleSideLength
             );
             currentPoint.displayedY = round(
                 (currentPoint.displayedY - CANVAS_HEIGHT / 2)
-                * Math.pow(currentPoint.displayedX + CANVAS_WIDTH, 2)
-                / Math.pow(CANVAS_WIDTH, 2)
+                * Math.pow(currentPoint.displayedX + canvasWidth, 2)
+                / Math.pow(canvasWidth, 2)
                 + CANVAS_HEIGHT / 2
             );
         }
@@ -172,7 +178,7 @@ function displayTriangles() {
 
         // Choose a colour for the current triangle.
         let swCorner = new Point(0, CANVAS_HEIGHT);
-        let neCorner = new Point(CANVAS_WIDTH, 0);
+        let neCorner = new Point(canvasWidth, 0);
         const CANVAS_DIAGONAL_LENGTH = pointDistance(swCorner, neCorner);
         let currentTriangleProportion =
             pointDistance(currentTriangle.point3, neCorner)
@@ -202,11 +208,15 @@ function displayTriangles() {
 }
 
 function setup() {
-    canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-    canvas.parent("mycanvas");
-    background(0);
-
     let params = getURLParameters();
+
+    canvasWidth = round(params[CANVAS_WIDTH_NAME]);
+    if (isNaN(canvasWidth))
+        canvasWidth = DEFAULT_CANVAS_WIDTH;
+    canvasWidth = max(MIN_CANVAS_WIDTH, canvasWidth);
+    let canvasWidthInput =
+        document.getElementById(CANVAS_WIDTH_NAME);
+    canvasWidthInput.value = canvasWidth.toString();
 
     triangleSideLength = round(params[TRIANGLE_SIDE_LENGTH_NAME]);
     if (isNaN(triangleSideLength))
@@ -229,6 +239,10 @@ function setup() {
     let displacementLimitInput =
         document.getElementById(DISPLACEMENT_LIMIT_NAME);
     displacementLimitInput.value = displacementLimit;
+
+    canvas = createCanvas(canvasWidth, CANVAS_HEIGHT);
+    canvas.parent("mycanvas");
+    background(0);
 
     generatePoints();
     adjustPoints();
