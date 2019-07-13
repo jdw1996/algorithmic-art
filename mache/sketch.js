@@ -29,7 +29,11 @@ const MIN_COLOUR_VARIATION_LIMIT = 0;
 const MAX_COLOUR_VARIATION_LIMIT = 255;
 let colourVariationLimit = DEFAULT_COLOUR_VARIATION_LIMIT
 
-const GRADIENT_SMOOTHNESS = 0.04;
+const GRADIENT_SMOOTHNESS_NAME = "GradientSmoothness";
+const DEFAULT_GRADIENT_SMOOTHNESS = 4;
+const MIN_GRADIENT_SMOOTHNESS = 0;
+const MAX_GRADIENT_SMOOTHNESS = 100;
+let gradientSmoothness = DEFAULT_GRADIENT_SMOOTHNESS;
 
 const SW_COLOUR = [0, 0, 0];
 const NE_COLOUR = [255, 255, 255];
@@ -192,7 +196,7 @@ function displayTriangles() {
         let currentTriangleProportion =
             pointDistance(currentTriangle.point3, neCorner)
             / CANVAS_DIAGONAL_LENGTH
-            + random(-GRADIENT_SMOOTHNESS, GRADIENT_SMOOTHNESS);
+            + random(-gradientSmoothness/100, gradientSmoothness/100);
         let currentRed = round(
             (SW_COLOUR[0] - NE_COLOUR[0]) * currentTriangleProportion
             + NE_COLOUR[0]
@@ -269,6 +273,18 @@ function setup() {
     let colourVariationLimitInput =
         document.getElementById(COLOUR_VARIATION_LIMIT_NAME);
     colourVariationLimitInput.value = colourVariationLimit;
+
+    gradientSmoothness = round(params[GRADIENT_SMOOTHNESS_NAME]);
+    if (isNaN(gradientSmoothness))
+        gradientSmoothness = DEFAULT_GRADIENT_SMOOTHNESS;
+    gradientSmoothness = constrain(
+        gradientSmoothness,
+        MIN_GRADIENT_SMOOTHNESS,
+        MAX_GRADIENT_SMOOTHNESS
+    );
+    let gradientSmoothnessInput =
+        document.getElementById(GRADIENT_SMOOTHNESS_NAME);
+    gradientSmoothnessInput.value = gradientSmoothness;
 
     canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent("mycanvas");
