@@ -6,7 +6,10 @@ const DEFAULT_CANVAS_WIDTH = 1200;
 const MIN_CANVAS_WIDTH = 10;
 let canvasWidth = DEFAULT_CANVAS_WIDTH;
 
-const CANVAS_HEIGHT = 800;
+const CANVAS_HEIGHT_NAME = "CanvasHeight";
+const DEFAULT_CANVAS_HEIGHT = 800;
+const MIN_CANVAS_HEIGHT = 10;
+let canvasHeight = DEFAULT_CANVAS_HEIGHT;
 
 const TRIANGLE_SIDE_LENGTH_NAME = "TriangleSideLength";
 const DEFAULT_TRIANGLE_SIDE_LENGTH = 50;
@@ -76,7 +79,7 @@ function generatePoints() {
         let currentColumn = [];
         let previousColumn = points[points.length - 1];
 
-        while (currentY < CANVAS_HEIGHT + 2 * triangleSideLength) {
+        while (currentY < canvasHeight + 2 * triangleSideLength) {
             // Create and store a new point.
             let newPoint = new Point(currentX, currentY);
             currentColumn.push(newPoint);
@@ -149,10 +152,10 @@ function adjustPoints() {
                 - triangleSideLength
             );
             currentPoint.y = round(
-                (currentPoint.y - CANVAS_HEIGHT / 2)
+                (currentPoint.y - canvasHeight / 2)
                 * Math.pow(currentPoint.x + canvasWidth, 2)
                 / Math.pow(canvasWidth, 2)
-                + CANVAS_HEIGHT / 2
+                + canvasHeight / 2
             );
             currentPoint.displayedX = round(
                 (currentPoint.displayedX < 0 ? -1 : 1)
@@ -161,10 +164,10 @@ function adjustPoints() {
                 - triangleSideLength
             );
             currentPoint.displayedY = round(
-                (currentPoint.displayedY - CANVAS_HEIGHT / 2)
+                (currentPoint.displayedY - canvasHeight / 2)
                 * Math.pow(currentPoint.displayedX + canvasWidth, 2)
                 / Math.pow(canvasWidth, 2)
-                + CANVAS_HEIGHT / 2
+                + canvasHeight / 2
             );
         }
     }
@@ -177,7 +180,7 @@ function displayTriangles() {
         let currentTriangle = triangles[i];
 
         // Choose a colour for the current triangle.
-        let swCorner = new Point(0, CANVAS_HEIGHT);
+        let swCorner = new Point(0, canvasHeight);
         let neCorner = new Point(canvasWidth, 0);
         const CANVAS_DIAGONAL_LENGTH = pointDistance(swCorner, neCorner);
         let currentTriangleProportion =
@@ -218,6 +221,14 @@ function setup() {
         document.getElementById(CANVAS_WIDTH_NAME);
     canvasWidthInput.value = canvasWidth.toString();
 
+    canvasHeight = round(params[CANVAS_HEIGHT_NAME]);
+    if (isNaN(canvasHeight))
+        canvasHeight = DEFAULT_CANVAS_HEIGHT;
+    canvasHeight = max(MIN_CANVAS_HEIGHT, canvasHeight);
+    let canvasHeightInput =
+        document.getElementById(CANVAS_HEIGHT_NAME);
+    canvasHeightInput.value = canvasHeight.toString();
+
     triangleSideLength = round(params[TRIANGLE_SIDE_LENGTH_NAME]);
     if (isNaN(triangleSideLength))
         triangleSideLength = DEFAULT_TRIANGLE_SIDE_LENGTH;
@@ -240,7 +251,7 @@ function setup() {
         document.getElementById(DISPLACEMENT_LIMIT_NAME);
     displacementLimitInput.value = displacementLimit;
 
-    canvas = createCanvas(canvasWidth, CANVAS_HEIGHT);
+    canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent("mycanvas");
     background(0);
 
