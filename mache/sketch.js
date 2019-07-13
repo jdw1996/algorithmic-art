@@ -51,11 +51,6 @@ class Triangle {
 }
 
 
-// Return x if a <= x <= b; if x < a, return a; if x > b, return b.
-function constrain(x, a, b) {
-    return max(a, min(x, b));
-}
-
 function getURLParameters() {
     // Adapted from `https://www.kevinleary.net/javascript-get-url-parameters/`.
     let params = {};
