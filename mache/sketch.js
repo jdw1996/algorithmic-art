@@ -23,7 +23,12 @@ const MIN_DISPLACEMENT_LIMIT = 0;
 const MAX_DISPLACEMENT_LIMIT = 75;
 let displacementLimit = DEFAULT_DISPLACEMENT_LIMIT;
 
-const COLOUR_VARIATION_LIMIT = 7;
+const COLOUR_VARIATION_LIMIT_NAME = "ColourVariationLimit";
+const DEFAULT_COLOUR_VARIATION_LIMIT = 4;
+const MIN_COLOUR_VARIATION_LIMIT = 0;
+const MAX_COLOUR_VARIATION_LIMIT = 255;
+let colourVariationLimit = DEFAULT_COLOUR_VARIATION_LIMIT
+
 const GRADIENT_SMOOTHNESS = 0.04;
 
 const SW_COLOUR = [0, 0, 0];
@@ -191,15 +196,15 @@ function displayTriangles() {
         let currentRed = round(
             (SW_COLOUR[0] - NE_COLOUR[0]) * currentTriangleProportion
             + NE_COLOUR[0]
-        ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
+        ) + random(-colourVariationLimit, colourVariationLimit + 1);
         let currentGreen = round(
             (SW_COLOUR[1] - NE_COLOUR[1]) * currentTriangleProportion
             + NE_COLOUR[1]
-        ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
+        ) + random(-colourVariationLimit, colourVariationLimit + 1);
         let currentBlue = round(
             (SW_COLOUR[2] - NE_COLOUR[2]) * currentTriangleProportion
             + NE_COLOUR[2]
-        ) + random(-COLOUR_VARIATION_LIMIT, COLOUR_VARIATION_LIMIT+1);
+        ) + random(-colourVariationLimit, colourVariationLimit + 1);
         stroke(currentRed, currentGreen, currentBlue);
         fill(currentRed, currentGreen, currentBlue);
 
@@ -252,6 +257,18 @@ function setup() {
     let displacementLimitInput =
         document.getElementById(DISPLACEMENT_LIMIT_NAME);
     displacementLimitInput.value = displacementLimit;
+
+    colourVariationLimit = round(params[COLOUR_VARIATION_LIMIT_NAME]);
+    if (isNaN(colourVariationLimit))
+        colourVariationLimit = DEFAULT_COLOUR_VARIATION_LIMIT;
+    colourVariationLimit = constrain(
+        colourVariationLimit,
+        MIN_COLOUR_VARIATION_LIMIT,
+        MAX_COLOUR_VARIATION_LIMIT
+    );
+    let colourVariationLimitInput =
+        document.getElementById(COLOUR_VARIATION_LIMIT_NAME);
+    colourVariationLimitInput.value = colourVariationLimit;
 
     canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent("mycanvas");
