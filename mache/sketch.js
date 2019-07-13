@@ -7,7 +7,12 @@ const MIN_TRIANGLE_SIDE_LENGTH = 20;
 const MAX_TRIANGLE_SIDE_LENGTH = 150;
 let triangleSideLength = DEFAULT_TRIANGLE_SIDE_LENGTH;
 
-const DISPLACEMENT_LIMIT = triangleSideLength / 3;
+const DISPLACEMENT_LIMIT_NAME = "DisplacementLimit";
+const DEFAULT_DISPLACEMENT_LIMIT = 15;
+const MIN_DISPLACEMENT_LIMIT = 0;
+const MAX_DISPLACEMENT_LIMIT = 75;
+let displacementLimit = DEFAULT_DISPLACEMENT_LIMIT;
+
 const COLOUR_VARIATION_LIMIT = 7;
 const GRADIENT_SMOOTHNESS = 0.04;
 const SQRT_3 = 1.732;
@@ -125,10 +130,10 @@ function adjustPoints() {
             // Randomly perturb the points.
             currentPoint.displayedX =
                 currentPoint.x
-                + random(-DISPLACEMENT_LIMIT, DISPLACEMENT_LIMIT);
+                + random(-displacementLimit, displacementLimit);
             currentPoint.displayedY =
                 currentPoint.y
-                + random(-DISPLACEMENT_LIMIT, DISPLACEMENT_LIMIT);
+                + random(-displacementLimit, displacementLimit);
 
             // Push the points farther apart on the right.
             currentPoint.x = round(
@@ -213,6 +218,17 @@ function setup() {
     let triangleSideLengthInput =
         document.getElementById(TRIANGLE_SIDE_LENGTH_NAME);
     triangleSideLengthInput.value = triangleSideLength.toString();
+
+    displacementLimit = round(params[DISPLACEMENT_LIMIT_NAME]);
+    if (isNaN(displacementLimit))
+        displacementLimit = DEFAULT_DISPLACEMENT_LIMIT;
+    displacementLimit = min(
+        MAX_DISPLACEMENT_LIMIT,
+        max(MIN_DISPLACEMENT_LIMIT, displacementLimit)
+    );
+    let displacementLimitInput =
+        document.getElementById(DISPLACEMENT_LIMIT_NAME);
+    displacementLimitInput.value = displacementLimit;
 
     generatePoints();
     adjustPoints();
