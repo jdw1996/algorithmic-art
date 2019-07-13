@@ -50,6 +50,12 @@ class Triangle {
     }
 }
 
+
+// Return x if a <= x <= b; if x < a, return a; if x > b, return b.
+function constrain(x, a, b) {
+    return max(a, min(x, b));
+}
+
 function getURLParameters() {
     // Adapted from `https://www.kevinleary.net/javascript-get-url-parameters/`.
     let params = {};
@@ -216,7 +222,7 @@ function setup() {
     canvasWidth = round(params[CANVAS_WIDTH_NAME]);
     if (isNaN(canvasWidth))
         canvasWidth = DEFAULT_CANVAS_WIDTH;
-    canvasWidth = max(MIN_CANVAS_WIDTH, canvasWidth);
+    canvasWidth = constrain(canvasWidth, MIN_CANVAS_WIDTH, canvasWidth);
     let canvasWidthInput =
         document.getElementById(CANVAS_WIDTH_NAME);
     canvasWidthInput.value = canvasWidth.toString();
@@ -224,7 +230,7 @@ function setup() {
     canvasHeight = round(params[CANVAS_HEIGHT_NAME]);
     if (isNaN(canvasHeight))
         canvasHeight = DEFAULT_CANVAS_HEIGHT;
-    canvasHeight = max(MIN_CANVAS_HEIGHT, canvasHeight);
+    canvasHeight = constrain(canvasHeight, MIN_CANVAS_HEIGHT, canvasHeight);
     let canvasHeightInput =
         document.getElementById(CANVAS_HEIGHT_NAME);
     canvasHeightInput.value = canvasHeight.toString();
@@ -232,9 +238,8 @@ function setup() {
     triangleSideLength = round(params[TRIANGLE_SIDE_LENGTH_NAME]);
     if (isNaN(triangleSideLength))
         triangleSideLength = DEFAULT_TRIANGLE_SIDE_LENGTH;
-    triangleSideLength = min(
-        MAX_TRIANGLE_SIDE_LENGTH,
-        max(MIN_TRIANGLE_SIDE_LENGTH, triangleSideLength)
+    triangleSideLength = constrain(
+        triangleSideLength, MIN_TRIANGLE_SIDE_LENGTH, MAX_TRIANGLE_SIDE_LENGTH
     );
     let triangleSideLengthInput =
         document.getElementById(TRIANGLE_SIDE_LENGTH_NAME);
@@ -243,9 +248,8 @@ function setup() {
     displacementLimit = round(params[DISPLACEMENT_LIMIT_NAME]);
     if (isNaN(displacementLimit))
         displacementLimit = DEFAULT_DISPLACEMENT_LIMIT;
-    displacementLimit = min(
-        MAX_DISPLACEMENT_LIMIT,
-        max(MIN_DISPLACEMENT_LIMIT, displacementLimit)
+    displacementLimit = constrain(
+        displacementLimit, MIN_DISPLACEMENT_LIMIT, MAX_DISPLACEMENT_LIMIT
     );
     let displacementLimitInput =
         document.getElementById(DISPLACEMENT_LIMIT_NAME);
