@@ -35,8 +35,28 @@ const MIN_GRADIENT_SMOOTHNESS = 0;
 const MAX_GRADIENT_SMOOTHNESS = 100;
 let gradientSmoothness = DEFAULT_GRADIENT_SMOOTHNESS;
 
-const SW_COLOUR = [0, 0, 0];
-const NE_COLOUR = [255, 255, 255];
+const SW_COLOUR_RED_NAME = "SWColourRed";
+const SW_COLOUR_GREEN_NAME = "SWColourGreen";
+const SW_COLOUR_BLUE_NAME = "SWColourBlue";
+const DEFAULT_SW_COLOUR_RED = 0;
+const DEFAULT_SW_COLOUR_GREEN = 0;
+const DEFAULT_SW_COLOUR_BLUE = 0;
+let swColourRed = DEFAULT_SW_COLOUR_RED;
+let swColourGreen = DEFAULT_SW_COLOUR_GREEN;
+let swColourBlue = DEFAULT_SW_COLOUR_BLUE;
+
+const NE_COLOUR_RED_NAME = "NEColourRed";
+const NE_COLOUR_GREEN_NAME = "NEColourGreen";
+const NE_COLOUR_BLUE_NAME = "NEColourBlue";
+const DEFAULT_NE_COLOUR_RED = 255;
+const DEFAULT_NE_COLOUR_GREEN = 255;
+const DEFAULT_NE_COLOUR_BLUE = 255;
+let neColourRed = DEFAULT_NE_COLOUR_RED;
+let neColourGreen = DEFAULT_NE_COLOUR_GREEN;
+let neColourBlue = DEFAULT_NE_COLOUR_BLUE;
+
+const MIN_COLOUR_VALUE = 0;
+const MAX_COLOUR_VALUE = 255;
 
 let canvas = null;
 let points = [];
@@ -198,16 +218,16 @@ function displayTriangles() {
             / CANVAS_DIAGONAL_LENGTH
             + random(-gradientSmoothness/100, gradientSmoothness/100);
         let currentRed = round(
-            (SW_COLOUR[0] - NE_COLOUR[0]) * currentTriangleProportion
-            + NE_COLOUR[0]
+            (swColourRed - neColourRed) * currentTriangleProportion
+            + neColourRed
         ) + random(-colourVariationLimit, colourVariationLimit + 1);
         let currentGreen = round(
-            (SW_COLOUR[1] - NE_COLOUR[1]) * currentTriangleProportion
-            + NE_COLOUR[1]
+            (swColourGreen - neColourGreen) * currentTriangleProportion
+            + neColourGreen
         ) + random(-colourVariationLimit, colourVariationLimit + 1);
         let currentBlue = round(
-            (SW_COLOUR[2] - NE_COLOUR[2]) * currentTriangleProportion
-            + NE_COLOUR[2]
+            (swColourBlue - neColourBlue) * currentTriangleProportion
+            + neColourBlue
         ) + random(-colourVariationLimit, colourVariationLimit + 1);
         stroke(currentRed, currentGreen, currentBlue);
         fill(currentRed, currentGreen, currentBlue);
@@ -241,6 +261,40 @@ function setup() {
     let canvasHeightInput =
         document.getElementById(CANVAS_HEIGHT_NAME);
     canvasHeightInput.value = canvasHeight.toString();
+
+    swColourRed = round(params[SW_COLOUR_RED_NAME]);
+    swColourGreen = round(params[SW_COLOUR_GREEN_NAME]);
+    swColourBlue = round(params[SW_COLOUR_BLUE_NAME]);
+    if (isNaN(swColourRed)) swColourRed = DEFAULT_SW_COLOUR_RED;
+    if (isNaN(swColourGreen)) swColourGreen = DEFAULT_SW_COLOUR_GREEN;
+    if (isNaN(swColourBlue)) swColourBlue = DEFAULT_SW_COLOUR_BLUE;
+    swColourRed = constrain(swColourRed, MIN_COLOUR_VALUE, MAX_COLOUR_VALUE);
+    swColourGreen =
+        constrain(swColourGreen, MIN_COLOUR_VALUE, MAX_COLOUR_VALUE);
+    swColourBlue = constrain(swColourBlue, MIN_COLOUR_VALUE, MAX_COLOUR_VALUE);
+    let swColourRedInput = document.getElementById(SW_COLOUR_RED_NAME);
+    swColourRedInput.value = swColourRed.toString();
+    let swColourGreenInput = document.getElementById(SW_COLOUR_GREEN_NAME);
+    swColourGreenInput.value = swColourGreen.toString();
+    let swColourBlueInput = document.getElementById(SW_COLOUR_BLUE_NAME);
+    swColourBlueInput.value = swColourBlue.toString();
+
+    neColourRed = round(params[NE_COLOUR_RED_NAME]);
+    neColourGreen = round(params[NE_COLOUR_GREEN_NAME]);
+    neColourBlue = round(params[NE_COLOUR_BLUE_NAME]);
+    if (isNaN(neColourRed)) neColourRed = DEFAULT_NE_COLOUR_RED;
+    if (isNaN(neColourGreen)) neColourGreen = DEFAULT_NE_COLOUR_GREEN;
+    if (isNaN(neColourBlue)) neColourBlue = DEFAULT_NE_COLOUR_BLUE;
+    neColourRed = constrain(neColourRed, MIN_COLOUR_VALUE, MAX_COLOUR_VALUE);
+    neColourGreen =
+        constrain(neColourGreen, MIN_COLOUR_VALUE, MAX_COLOUR_VALUE);
+    neColourBlue = constrain(neColourBlue, MIN_COLOUR_VALUE, MAX_COLOUR_VALUE);
+    let neColourRedInput = document.getElementById(NE_COLOUR_RED_NAME);
+    neColourRedInput.value = neColourRed.toString();
+    let neColourGreenInput = document.getElementById(NE_COLOUR_GREEN_NAME);
+    neColourGreenInput.value = neColourGreen.toString();
+    let neColourBlueInput = document.getElementById(NE_COLOUR_BLUE_NAME);
+    neColourBlueInput.value = neColourBlue.toString();
 
     triangleSideLength = round(params[TRIANGLE_SIDE_LENGTH_NAME]);
     if (isNaN(triangleSideLength))
