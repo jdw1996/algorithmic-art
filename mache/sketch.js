@@ -58,6 +58,8 @@ let neColourBlue = DEFAULT_NE_COLOUR_BLUE;
 const MIN_COLOUR_VALUE = 0;
 const MAX_COLOUR_VALUE = 255;
 
+const SAVE_BUTTON_NAME = "SaveButton";
+
 let canvas = null;
 let points = [];
 let triangles = [];
@@ -341,6 +343,8 @@ function setup() {
     canvas = createCanvas(canvasWidth, canvasHeight);
     canvas.parent("mycanvas");
     background(0);
+
+    document.getElementById(SAVE_BUTTON_NAME).onclick = saveCanvas;
 
     generatePoints();
     adjustPoints();
