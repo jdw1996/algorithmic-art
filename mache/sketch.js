@@ -247,16 +247,14 @@ function setup() {
     let params = getURLParameters();
 
     canvasWidth = round(params[CANVAS_WIDTH_NAME]);
-    if (isNaN(canvasWidth))
-        canvasWidth = DEFAULT_CANVAS_WIDTH;
+    if (isNaN(canvasWidth)) canvasWidth = DEFAULT_CANVAS_WIDTH;
     canvasWidth = constrain(canvasWidth, MIN_CANVAS_WIDTH, canvasWidth);
     let canvasWidthInput =
         document.getElementById(CANVAS_WIDTH_NAME);
     canvasWidthInput.value = canvasWidth.toString();
 
     canvasHeight = round(params[CANVAS_HEIGHT_NAME]);
-    if (isNaN(canvasHeight))
-        canvasHeight = DEFAULT_CANVAS_HEIGHT;
+    if (isNaN(canvasHeight)) canvasHeight = DEFAULT_CANVAS_HEIGHT;
     canvasHeight = constrain(canvasHeight, MIN_CANVAS_HEIGHT, canvasHeight);
     let canvasHeightInput =
         document.getElementById(CANVAS_HEIGHT_NAME);
