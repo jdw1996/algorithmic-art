@@ -206,8 +206,6 @@ function adjustPoints() {
 }
 
 function displayTriangles() {
-    // Draw the triangles.
-    noStroke();
     for (let i = 0; i < triangles.length; i++) {
         let currentTriangle = triangles[i];
 
