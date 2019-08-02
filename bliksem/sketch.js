@@ -6,6 +6,7 @@ let GRADIENT_ARRAY = [
 
 let lightning_colour = null;
 let background_colour = null;
+let manualDraw = false;
 
 class Bolt {
 	constructor(initialAngle, initialRadius, isRoot, momentum=0) {
@@ -108,10 +109,23 @@ function setup() {
 	canvas.parent("mycanvas");
 	background(background_colour);
 
+	frameRate(1);
+
 	drawBolts(DEFAULT_CANVAS_WIDTH / 2, DEFAULT_CANVAS_HEIGHT / 2, 5)
 }
 
+function draw() {
+	if (manualDraw) return;
+	fade();
+	drawBolts(
+		random(100, DEFAULT_CANVAS_WIDTH - 100),
+		random(100, DEFAULT_CANVAS_HEIGHT - 100),
+		random(2,5)
+	);
+}
+
 function mousePressed() {
+	if (!manualDraw) return;
 	fade();
 	drawBolts(mouseX, mouseY, random(2,5));
 }
