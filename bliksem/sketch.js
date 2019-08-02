@@ -6,7 +6,7 @@ let GRADIENT_ARRAY = [
 
 let lightning_colour = null;
 let background_colour = null;
-let manualDraw = false;
+let automaticBoltsCheckbox = null;
 
 class Bolt {
 	constructor(initialAngle, initialRadius, isRoot, momentum=0) {
@@ -104,6 +104,7 @@ function setup() {
 		blue(background_colour),
 		0.5
 	);
+	automaticBoltsCheckbox = document.getElementById("automaticBolts");
 
 	let canvas = createCanvas(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
 	canvas.parent("mycanvas");
@@ -115,7 +116,7 @@ function setup() {
 }
 
 function draw() {
-	if (manualDraw) return;
+	if (!automaticBoltsCheckbox.checked) return;
 	fade();
 	drawBolts(
 		random(100, DEFAULT_CANVAS_WIDTH - 100),
@@ -125,7 +126,8 @@ function draw() {
 }
 
 function mousePressed() {
-	if (!manualDraw) return;
+	console.log("test");
+	if (automaticBoltsCheckbox.checked) return;
 	fade();
 	drawBolts(mouseX, mouseY, random(2,5));
 }
