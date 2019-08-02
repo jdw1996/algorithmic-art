@@ -87,6 +87,12 @@ function drawBolts(centreX, centreY, numBolts) {
 	}
 }
 
+function fade() {
+	stroke(fade_colour);
+	fill(fade_colour);
+	rect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
+}
+
 function setup() {
 	colorMode(RGB, 255, 255, 255, 1);
 	lightning_colour = color(255);
@@ -106,9 +112,6 @@ function setup() {
 }
 
 function mousePressed() {
-	stroke(fade_colour);
-	fill(fade_colour);
-	rect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
-
+	fade();
 	drawBolts(mouseX, mouseY, random(2,5));
 }
