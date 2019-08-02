@@ -95,7 +95,7 @@ function setup() {
 		red(background_colour),
 		green(background_colour),
 		blue(background_colour),
-		0.3
+		0.5
 	);
 
 	let canvas = createCanvas(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
