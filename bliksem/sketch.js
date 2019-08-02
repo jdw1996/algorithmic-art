@@ -47,7 +47,7 @@ function generateBolt(initialAngle, initialRadius, isRoot, momentum=0) {
 		let newRadius = newBolt.lastPoint[1] + 10;
 		newBolt.addPoint(newAngle, newRadius);
 		if (
-			newBolt.numBranches < newBolt.points.length / 12 && random() < 0.06
+			newBolt.numBranches < newBolt.points.length / 16 && random() < 0.06
 		) {
 			bolts = bolts.concat(
 				generateBolt(newAngle, newRadius, false, -newBolt.momentum)
@@ -62,7 +62,7 @@ function generateBolt(initialAngle, initialRadius, isRoot, momentum=0) {
 
 function drawBolts(centreX, centreY, numBolts) {
 	let bolts = [];
-	for (let i = 0; i < random(2,5); ++i) {
+	for (let i = 0; i < random(1,4); ++i) {
 		bolts = bolts.concat(generateBolt(random(0, 2 * PI), 0, true, 0));
 	}
 	for (let j = 0; j < GRADIENT_ARRAY.length; ++j) {
@@ -121,7 +121,7 @@ function draw() {
 	drawBolts(
 		random(100, DEFAULT_CANVAS_WIDTH - 100),
 		random(100, DEFAULT_CANVAS_HEIGHT - 100),
-		random(2,5)
+		random(1,4)
 	);
 }
 
@@ -129,5 +129,5 @@ function mousePressed() {
 	console.log("test");
 	if (automaticBoltsCheckbox.checked) return;
 	fade();
-	drawBolts(mouseX, mouseY, random(2,5));
+	drawBolts(mouseX, mouseY, random(1,4));
 }
