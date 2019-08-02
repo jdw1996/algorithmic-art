@@ -61,7 +61,7 @@ function generateBolt(initialAngle, initialRadius, isRoot, momentum=0) {
 
 function drawBolts(centreX, centreY, numBolts) {
 	let bolts = [];
-	for (let i = 0; i < 3; ++i) {
+	for (let i = 0; i < random(2,5); ++i) {
 		bolts = bolts.concat(generateBolt(random(0, 2 * PI), 0, true, 0));
 	}
 	for (let j = 0; j < GRADIENT_ARRAY.length; ++j) {
