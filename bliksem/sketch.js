@@ -1,6 +1,9 @@
 const DEFAULT_CANVAS_WIDTH = 1200;
 const DEFAULT_CANVAS_HEIGHT = 800;
 
+let lightning_colour = null;
+let background_colour = null;
+
 class Bolt {
 	constructor(initialAngle, initialRadius, isRoot, momentum=0) {
 		this.points = [];
@@ -45,18 +48,24 @@ function generateBolt(initialAngle, initialRadius, isRoot, momentum=0) {
 }
 
 function setup() {
-	const LIGHTNING_COLOUR = color(255);
-	const BACKGROUND_COLOUR = color(77, 0, 102);
+	colorMode(RGB, 255, 255, 255, 1);
+	lightning_colour = color(255);
+	background_colour = color(77, 0, 102);
+	fade_colour = color(
+		red(background_colour),
+		green(background_colour),
+		blue(background_colour),
+		0.3
+	);
 
 	let canvas = createCanvas(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
 	canvas.parent("mycanvas");
-	background(BACKGROUND_COLOUR);
+	background(background_colour);
 
 	let bolts = [];
 	for (let i = 0; i < 3; ++i) {
 		bolts = bolts.concat(generateBolt(random(0, 2 * PI), 0, true, 0));
 	}
-
 
 	let centre = [DEFAULT_CANVAS_WIDTH / 2, DEFAULT_CANVAS_HEIGHT / 2];
 	let gradientArr = [
@@ -73,7 +82,7 @@ function setup() {
 			let currentBolt = bolts[k];
 			for (let i = 0; i < currentBolt.points.length - 1; ++i) {
 				strokeWeight(gradientArr[j][0]);
-				stroke(lerpColor(BACKGROUND_COLOUR, LIGHTNING_COLOUR, gradientArr[j][1]));
+				stroke(lerpColor(background_colour, lightning_colour, gradientArr[j][1]));
 				line(
 					cos(currentBolt.points[i][0]) * currentBolt.points[i][1] + centre[0],
 					sin(currentBolt.points[i][0]) * currentBolt.points[i][1] + centre[1],
