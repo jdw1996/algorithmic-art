@@ -104,3 +104,11 @@ function setup() {
 
 	drawBolts(DEFAULT_CANVAS_WIDTH / 2, DEFAULT_CANVAS_HEIGHT / 2, 5)
 }
+
+function mousePressed() {
+	stroke(fade_colour);
+	fill(fade_colour);
+	rect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
+
+	drawBolts(mouseX, mouseY, random(2,5));
+}
