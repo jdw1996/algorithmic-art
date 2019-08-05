@@ -1,5 +1,5 @@
-const DEFAULT_CANVAS_WIDTH = 1200;
-const DEFAULT_CANVAS_HEIGHT = 800;
+const CANVAS_WIDTH = 1200;
+const CANVAS_HEIGHT = 800;
 let GRADIENT_ARRAY = [
 	[20, 0.1], [12, 0.2], [7, 0.3], [5, 0.4], [4, 0.6], [3, 0.8], [1, 1]
 ];
@@ -39,7 +39,7 @@ function generateBolt(initialAngle, initialRadius, isRoot, momentum=0) {
 	let bolts = [];
 	while (
 		newBolt.lastPoint[1]
-		< max(DEFAULT_CANVAS_HEIGHT, DEFAULT_CANVAS_WIDTH) / 2
+		< max(CANVAS_HEIGHT, CANVAS_WIDTH) / 2
 	) {
 		let newAngle =
 			newBolt.lastPoint[0]
@@ -91,7 +91,7 @@ function drawBolts(centreX, centreY, numBolts) {
 function fade() {
 	stroke(fade_colour);
 	fill(fade_colour);
-	rect(0, 0, DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
+	rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
 function setup() {
@@ -106,21 +106,21 @@ function setup() {
 	);
 	automaticBoltsCheckbox = document.getElementById("automaticBolts");
 
-	let canvas = createCanvas(DEFAULT_CANVAS_WIDTH, DEFAULT_CANVAS_HEIGHT);
+	let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 	canvas.parent("mycanvas");
 	background(background_colour);
 
 	frameRate(1);
 
-	drawBolts(DEFAULT_CANVAS_WIDTH / 2, DEFAULT_CANVAS_HEIGHT / 2, 5)
+	drawBolts(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2, 5)
 }
 
 function draw() {
 	if (!automaticBoltsCheckbox.checked) return;
 	fade();
 	drawBolts(
-		random(100, DEFAULT_CANVAS_WIDTH - 100),
-		random(100, DEFAULT_CANVAS_HEIGHT - 100),
+		random(100, CANVAS_WIDTH - 100),
+		random(100, CANVAS_HEIGHT - 100),
 		random(1,4)
 	);
 }
