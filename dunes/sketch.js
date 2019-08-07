@@ -91,7 +91,8 @@ function generateAndDrawWaves() {
 	// Generate first wave.
 	waves.push(generateStandaloneWave(waveWidth / 2));
 	// Generate remaining waves.
-	for (let i = 1; i < numWaves; ++i) {
+	// NB: The 10 is a fudge factor so that the waves go past the end of the canvas.
+	for (let i = 1; i < numWaves + 10; ++i) {
 		waves.push(generateWave(waves[waves.length - 1]));
 	}
 
