@@ -18,8 +18,8 @@ class Point {
 /* COLOUR SCHEME GENERATORS */
 
 function getColourDesert() {
-	let red = random(170, 200);
-	let green = random(red * 8 / 17, red * 9 / 17);
+	let red = random(180, 210);
+	let green = random(red * 9 / 17, red * 10 / 17);
 	let blue = random(0, 30);
 	return color(red, green, blue);
 }
