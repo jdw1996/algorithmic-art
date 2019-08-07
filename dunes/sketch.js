@@ -18,17 +18,17 @@ class Point {
 /* COLOUR SCHEME GENERATORS */
 
 function getColourDesert() {
-	let red = random(180, 210);
-	let green = random(red * 9 / 17, red * 10 / 17);
-	let blue = random(0, 30);
-	return color(red, green, blue);
+	let r = random(180, 210);
+	let g = random(r * 9 / 17, r * 10 / 17);
+	let b = random(0, 30);
+	return color(r, g, b);
 }
 
 function getColourMars() {
-	let red = random(140, 180);
-	let green = random(red * 3 / 14, red * 4 / 14);
-	let blue = 0;
-	return color(red, green, blue);
+	let r = random(140, 180);
+	let g = random(r * 3 / 14, r * 4 / 14);
+	let b = 0;
+	return color(r, g, b);
 }
 
 /* MAIN LOGIC */
