@@ -19,14 +19,14 @@ class Point {
 
 function getColourDesert() {
 	let red = random(170, 200);
-	let green = random(red / 2, red * 3 / 5);
+	let green = random(red * 8 / 17, red * 9 / 17);
 	let blue = random(0, 30);
 	return color(red, green, blue);
 }
 
 function getColourMars() {
-	let red = random(110, 150);
-	let green = random(0, red / 4);
+	let red = random(140, 180);
+	let green = random(red * 3 / 14, red * 4 / 14);
 	let blue = 0;
 	return color(red, green, blue);
 }
