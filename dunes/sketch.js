@@ -14,7 +14,12 @@ const MIN_NUM_WAVES = 5;
 const MAX_NUM_WAVES = 100;
 let numWaves = DEFAULT_NUM_WAVES;
 
-const pointsPerWave = 25;
+const POINTS_PER_WAVE_NAME = "PointsPerWave";
+const DEFAULT_POINTS_PER_WAVE = 25;
+const MIN_POINTS_PER_WAVE = 3;
+const MAX_POINTS_PER_WAVE = 100;
+let pointsPerWave = DEFAULT_POINTS_PER_WAVE;
+
 const WAVE_VARIANCE = 7;
 
 let waveWidth = 0;
@@ -130,6 +135,13 @@ function setup() {
 	let numWavesInput =
 		document.getElementById(NUM_WAVES_NAME);
 	numWavesInput.value = numWaves.toString();
+
+	pointsPerWave = round(params[POINTS_PER_WAVE_NAME]);
+	if (isNaN(pointsPerWave)) pointsPerWave = DEFAULT_POINTS_PER_WAVE;
+	pointsPerWave = constrain(pointsPerWave, MIN_POINTS_PER_WAVE, MAX_POINTS_PER_WAVE);
+	let pointsPerWaveInput =
+		document.getElementById(POINTS_PER_WAVE_NAME);
+	pointsPerWaveInput.value = pointsPerWave.toString();
 
 	let canvas = createCanvas(canvasWidth, canvasHeight);
 	canvas.parent("mycanvas");
