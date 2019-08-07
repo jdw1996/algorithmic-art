@@ -1,6 +1,6 @@
 const CANVAS_WIDTH = 1200;
 const CANVAS_HEIGHT = 800;
-const NUM_WAVES = 26;
+const NUM_WAVES = 40;
 const POINTS_PER_WAVE = 25;
 const WAVE_VARIANCE = 7;
 
