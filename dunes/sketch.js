@@ -45,6 +45,18 @@ function getColourMars() {
 	return color(r, g, b);
 }
 
+function getColourGreyscale() {
+	let n = random(256);
+	return color(n, n, n);
+}
+
+function getColourWater() {
+	let b = random(200, 256);
+	let r = random(0, b / 4);
+	let g = random(b / 2, b * 2 / 3);
+	return color(r, g, b);
+}
+
 /* MAIN LOGIC */
 
 class Point {
