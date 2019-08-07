@@ -20,7 +20,11 @@ const MIN_POINTS_PER_WAVE = 3;
 const MAX_POINTS_PER_WAVE = 100;
 let pointsPerWave = DEFAULT_POINTS_PER_WAVE;
 
-const WAVE_VARIANCE = 7;
+const WAVE_VARIANCE_NAME = "WaveVariance";
+const DEFAULT_WAVE_VARIANCE = 7;
+const MIN_WAVE_VARIANCE = 0;
+const MAX_WAVE_VARIANCE = 25;
+let waveVariance = 4;
 
 let waveWidth = 0;
 let pointGap = 0;
@@ -67,7 +71,7 @@ function getURLParameters() {
 function generateStandaloneWave(x) {
 	let currentWave = [];
 	for (let i = 0; i < pointsPerWave; ++i) {
-		currentWave.push(new Point(x + random(-WAVE_VARIANCE, WAVE_VARIANCE), i * pointGap));
+		currentWave.push(new Point(x + random(-waveVariance, waveVariance), i * pointGap));
 	}
 	return currentWave;
 }
@@ -76,7 +80,7 @@ function generateWave(previousWave) {
 	let newWave = [];
 	for (let i = 0; i < pointsPerWave; ++i) {
 		let previousPoint = previousWave[i];
-		let offset = previousPoint.offset + random(-WAVE_VARIANCE, WAVE_VARIANCE);
+		let offset = previousPoint.offset + random(-waveVariance, waveVariance);
 		newWave.push(new Point(previousPoint.x + offset, i * pointGap));
 	}
 	return newWave;
@@ -142,6 +146,13 @@ function setup() {
 	let pointsPerWaveInput =
 		document.getElementById(POINTS_PER_WAVE_NAME);
 	pointsPerWaveInput.value = pointsPerWave.toString();
+
+	waveVariance = round(params[WAVE_VARIANCE_NAME]);
+	if (isNaN(waveVariance)) waveVariance = DEFAULT_WAVE_VARIANCE;
+	waveVariance = constrain(waveVariance, MIN_WAVE_VARIANCE, MAX_WAVE_VARIANCE);
+	let waveVarianceInput =
+		document.getElementById(WAVE_VARIANCE_NAME);
+	waveVarianceInput.value = waveVariance.toString();
 
 	let canvas = createCanvas(canvasWidth, canvasHeight);
 	canvas.parent("mycanvas");
