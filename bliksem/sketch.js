@@ -126,7 +126,6 @@ function draw() {
 }
 
 function mousePressed() {
-	console.log("test");
 	if (automaticBoltsCheckbox.checked) return;
 	fade();
 	drawBolts(mouseX, mouseY, random(1,4));
