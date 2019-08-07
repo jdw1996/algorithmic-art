@@ -8,12 +8,17 @@ const DEFAULT_CANVAS_HEIGHT = 800;
 const MIN_CANVAS_HEIGHT = 10;
 let canvasHeight = DEFAULT_CANVAS_HEIGHT;
 
-const numWaves = 40;
+const NUM_WAVES_NAME = "NumWaves";
+const DEFAULT_NUM_WAVES = 40;
+const MIN_NUM_WAVES = 5;
+const MAX_NUM_WAVES = 100;
+let numWaves = DEFAULT_NUM_WAVES;
+
 const pointsPerWave = 25;
 const WAVE_VARIANCE = 7;
 
-let waveWidth = canvasWidth / (numWaves - 1);
-let pointGap = canvasHeight / (pointsPerWave - 1);
+let waveWidth = 0;
+let pointGap = 0;
 
 /* COLOUR SCHEME GENERATORS */
 
@@ -119,9 +124,19 @@ function setup() {
 		document.getElementById(CANVAS_HEIGHT_NAME);
 	canvasHeightInput.value = canvasHeight.toString();
 
+	numWaves = round(params[NUM_WAVES_NAME]);
+	if (isNaN(numWaves)) numWaves = DEFAULT_NUM_WAVES;
+	numWaves = constrain(numWaves, MIN_NUM_WAVES, MAX_NUM_WAVES);
+	let numWavesInput =
+		document.getElementById(NUM_WAVES_NAME);
+	numWavesInput.value = numWaves.toString();
+
 	let canvas = createCanvas(canvasWidth, canvasHeight);
 	canvas.parent("mycanvas");
 	background(getColourDesert());
+
+	waveWidth = canvasWidth / (numWaves - 1);
+	pointGap = canvasHeight / (pointsPerWave - 1);
 
 	generateAndDrawWaves();
 }
