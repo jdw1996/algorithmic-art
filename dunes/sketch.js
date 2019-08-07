@@ -7,14 +7,6 @@ const WAVE_VARIANCE = 7;
 const WAVE_WIDTH = CANVAS_WIDTH / (NUM_WAVES - 1);
 const POINT_GAP = CANVAS_HEIGHT / (POINTS_PER_WAVE - 1);
 
-class Point {
-	constructor(x, y, offset=WAVE_WIDTH) {
-		this.x = x;
-		this.y = y;
-		this.offset = offset;
-	}
-}
-
 /* COLOUR SCHEME GENERATORS */
 
 function getColourDesert() {
@@ -32,6 +24,14 @@ function getColourMars() {
 }
 
 /* MAIN LOGIC */
+
+class Point {
+	constructor(x, y, offset=WAVE_WIDTH) {
+		this.x = x;
+		this.y = y;
+		this.offset = offset;
+	}
+}
 
 function generateStandaloneWave(x) {
 	let currentWave = [];
