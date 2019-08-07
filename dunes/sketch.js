@@ -1,11 +1,19 @@
-const CANVAS_WIDTH = 1200;
-const CANVAS_HEIGHT = 800;
-const NUM_WAVES = 40;
-const POINTS_PER_WAVE = 25;
+const CANVAS_WIDTH_NAME = "CanvasWidth";
+const DEFAULT_CANVAS_WIDTH = 1200;
+const MIN_CANVAS_WIDTH = 10;
+let canvasWidth = DEFAULT_CANVAS_WIDTH;
+
+const CANVAS_HEIGHT_NAME = "CanvasHeight";
+const DEFAULT_CANVAS_HEIGHT = 800;
+const MIN_CANVAS_HEIGHT = 10;
+let canvasHeight = DEFAULT_CANVAS_HEIGHT;
+
+const numWaves = 40;
+const pointsPerWave = 25;
 const WAVE_VARIANCE = 7;
 
-const WAVE_WIDTH = CANVAS_WIDTH / (NUM_WAVES - 1);
-const POINT_GAP = CANVAS_HEIGHT / (POINTS_PER_WAVE - 1);
+let waveWidth = canvasWidth / (numWaves - 1);
+let pointGap = canvasHeight / (pointsPerWave - 1);
 
 /* COLOUR SCHEME GENERATORS */
 
@@ -26,41 +34,50 @@ function getColourMars() {
 /* MAIN LOGIC */
 
 class Point {
-	constructor(x, y, offset=WAVE_WIDTH) {
+	constructor(x, y, offset=waveWidth) {
 		this.x = x;
 		this.y = y;
 		this.offset = offset;
 	}
 }
 
+function getURLParameters() {
+	// Adapted from `https://www.kevinleary.net/javascript-get-url-parameters/`.
+	let params = {};
+	let definitions = decodeURIComponent(
+		window.location.href.slice(window.location.href.indexOf("?") + 1)
+	).split("&");
+	definitions.forEach( function(val) {
+		let parts = val.split('=', 2);
+		params[parts[0]] = parts[1];
+	} );
+	return params;
+}
+
 function generateStandaloneWave(x) {
 	let currentWave = [];
-	for (let i = 0; i < POINTS_PER_WAVE; ++i) {
-		currentWave.push(new Point(x + random(-WAVE_VARIANCE, WAVE_VARIANCE), i * POINT_GAP));
+	for (let i = 0; i < pointsPerWave; ++i) {
+		currentWave.push(new Point(x + random(-WAVE_VARIANCE, WAVE_VARIANCE), i * pointGap));
 	}
 	return currentWave;
 }
 
 function generateWave(previousWave) {
 	let newWave = [];
-	for (let i = 0; i < POINTS_PER_WAVE; ++i) {
+	for (let i = 0; i < pointsPerWave; ++i) {
 		let previousPoint = previousWave[i];
 		let offset = previousPoint.offset + random(-WAVE_VARIANCE, WAVE_VARIANCE);
-		newWave.push(new Point(previousPoint.x + offset, i * POINT_GAP));
+		newWave.push(new Point(previousPoint.x + offset, i * pointGap));
 	}
 	return newWave;
 }
 
-function setup() {
-	let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
-	canvas.parent("mycanvas");
-	background(getColourDesert());
-
+function generateAndDrawWaves() {
 	let waves = [];
 	// Generate first wave.
-	waves.push(generateStandaloneWave(WAVE_WIDTH / 2));
+	waves.push(generateStandaloneWave(waveWidth / 2));
 	// Generate remaining waves.
-	for (let i = 1; i < NUM_WAVES; ++i) {
+	for (let i = 1; i < numWaves; ++i) {
 		waves.push(generateWave(waves[waves.length - 1]));
 	}
 
@@ -80,7 +97,37 @@ function setup() {
 		}
 		vertex(currentWave[currentWave.length - 1].x, currentWave[currentWave.length - 1].y)
 		vertex(currentWave[currentWave.length - 1].x, currentWave[currentWave.length - 1].y)
-		vertex(0, CANVAS_HEIGHT);
+		vertex(0, canvasHeight);
 		endShape(CLOSE);
 	}
+}
+
+function setup() {
+	let params = getURLParameters();
+
+	canvasWidth = round(params[CANVAS_WIDTH_NAME]);
+	if (isNaN(canvasWidth)) canvasWidth = DEFAULT_CANVAS_WIDTH;
+	canvasWidth = constrain(canvasWidth, MIN_CANVAS_WIDTH, canvasWidth);
+	let canvasWidthInput =
+		document.getElementById(CANVAS_WIDTH_NAME);
+	canvasWidthInput.value = canvasWidth.toString();
+
+	canvasHeight = round(params[CANVAS_HEIGHT_NAME]);
+	if (isNaN(canvasHeight)) canvasHeight = DEFAULT_CANVAS_HEIGHT;
+	canvasHeight = constrain(canvasHeight, MIN_CANVAS_HEIGHT, canvasHeight);
+	let canvasHeightInput =
+		document.getElementById(CANVAS_HEIGHT_NAME);
+	canvasHeightInput.value = canvasHeight.toString();
+
+	let canvas = createCanvas(canvasWidth, canvasHeight);
+	canvas.parent("mycanvas");
+	background(getColourDesert());
+
+	generateAndDrawWaves();
+}
+
+function mousePressed() {
+	if (mouseX < 0 || mouseX > canvasWidth || mouseY < 0 || mouseY > canvasHeight)
+		return;
+	generateAndDrawWaves();
 }
