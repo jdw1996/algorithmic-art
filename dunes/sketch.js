@@ -20,7 +20,7 @@ function getColorDesert() {
 	let red = random(170, 200);
 	let green = random(red / 2, red * 3 / 5);
 	let blue = random(0, 30);
-	return color(red, green, blue)
+	return color(red, green, blue);
 }
 
 function getColorMars() {
