@@ -8,9 +8,10 @@ const WAVE_WIDTH = CANVAS_WIDTH / (NUM_WAVES - 1);
 const POINT_GAP = CANVAS_HEIGHT / (POINTS_PER_WAVE - 1);
 
 class Point {
-	constructor(x, y) {
+	constructor(x, y, offset=WAVE_WIDTH) {
 		this.x = x;
 		this.y = y;
+		this.offset = offset;
 	}
 }
 
@@ -44,7 +45,8 @@ function generateWave(previousWave) {
 	let newWave = [];
 	for (let i = 0; i < POINTS_PER_WAVE; ++i) {
 		let previousPoint = previousWave[i];
-		newWave.push(new Point(previousPoint.x + WAVE_WIDTH + random(-WAVE_VARIANCE, WAVE_VARIANCE), i * POINT_GAP));
+		let offset = previousPoint.offset + random(-WAVE_VARIANCE, WAVE_VARIANCE);
+		newWave.push(new Point(previousPoint.x + offset, i * POINT_GAP));
 	}
 	return newWave;
 }
