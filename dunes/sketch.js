@@ -17,14 +17,14 @@ class Point {
 
 /* COLOUR SCHEME GENERATORS */
 
-function getColorDesert() {
+function getColourDesert() {
 	let red = random(170, 200);
 	let green = random(red / 2, red * 3 / 5);
 	let blue = random(0, 30);
 	return color(red, green, blue);
 }
 
-function getColorMars() {
+function getColourMars() {
 	let red = random(110, 150);
 	let green = random(0, red / 4);
 	let blue = 0;
@@ -54,7 +54,7 @@ function generateWave(previousWave) {
 function setup() {
 	let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 	canvas.parent("mycanvas");
-	background(getColorDesert());
+	background(getColourDesert());
 
 	let waves = [];
 	// Generate first wave.
@@ -67,7 +67,7 @@ function setup() {
 	for (let i = waves.length - 1; i >= 0; --i) {
 		let currentWave = waves[i];
 
-		let currentColour = getColorDesert();
+		let currentColour = getColourDesert();
 		fill(currentColour);
 		stroke(currentColour);
 
