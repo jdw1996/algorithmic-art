@@ -31,6 +31,7 @@ const DESERT = "Desert";
 const MARS = "Mars";
 const GREYSCALE = "Greyscale";
 const WATER = "Water";
+const BEACH = "Beach";
 const DEFAULT_COLOUR_SCHEME = DESERT;
 let colourScheme = DEFAULT_COLOUR_SCHEME;
 
@@ -65,11 +66,20 @@ function getColourWater() {
 	return color(r, g, b);
 }
 
-function getColour(scheme) {
+function getColourBeach(x) {
+	if (x < DEFAULT_CANVAS_WIDTH / 2) {
+		return getColourDesert();
+	} else {
+		return getColourWater();
+	}
+}
+
+function getColour(scheme, x) {
 	if (scheme === DESERT) return getColourDesert();
 	if (scheme === MARS) return getColourMars();
 	if (scheme === GREYSCALE) return getColourGreyscale();
 	if (scheme === WATER) return getColourWater();
+	if (scheme === BEACH) return getColourBeach(x);
 }
 
 /* MAIN LOGIC */
@@ -126,7 +136,7 @@ function generateAndDrawWaves() {
 	for (let i = waves.length - 1; i >= 0; --i) {
 		let currentWave = waves[i];
 
-		let currentColour = getColour(colourScheme);
+		let currentColour = getColour(colourScheme, currentWave[0].x);
 		fill(currentColour);
 		stroke(currentColour);
 
@@ -189,7 +199,7 @@ function setup() {
 
 	let canvas = createCanvas(canvasWidth, canvasHeight);
 	canvas.parent("mycanvas");
-	background(getColour(colourScheme));
+	background(getColour(colourScheme, DEFAULT_CANVAS_WIDTH));
 
 	waveWidth = canvasWidth / (numWaves - 1);
 	pointGap = canvasHeight / (pointsPerWave - 1);
