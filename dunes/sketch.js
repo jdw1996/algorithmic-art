@@ -36,6 +36,8 @@ const GREYSCALE = "Greyscale";
 const DEFAULT_COLOUR_SCHEME = DESERT;
 let colourScheme = DEFAULT_COLOUR_SCHEME;
 
+const SAVE_BUTTON_NAME = "SaveButton";
+
 let waveWidth = 0;
 let pointGap = 0;
 
@@ -210,6 +212,8 @@ function setup() {
 	let canvas = createCanvas(canvasWidth, canvasHeight);
 	canvas.parent("mycanvas");
 	background(getColour(colourScheme, DEFAULT_CANVAS_WIDTH));
+
+	document.getElementById(SAVE_BUTTON_NAME).onclick = saveCanvas;
 
 	waveWidth = canvasWidth / (numWaves - 1);
 	pointGap = canvasHeight / (pointsPerWave - 1);
