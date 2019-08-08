@@ -29,10 +29,10 @@ let waveVariance = DEFAULT_WAVE_VARIANCE;
 const COLOUR_SCHEME_NAME = "ColourScheme";
 const DESERT = "Desert";
 const MARS = "Mars";
-const GREYSCALE = "Greyscale";
 const WATER = "Water";
 const BEACH = "Beach";
 const CANDY = "Candy";
+const GREYSCALE = "Greyscale";
 const DEFAULT_COLOUR_SCHEME = DESERT;
 let colourScheme = DEFAULT_COLOUR_SCHEME;
 
@@ -86,10 +86,10 @@ function getColourCandy(x) {
 function getColour(scheme, x) {
 	if (scheme === DESERT) return getColourDesert();
 	if (scheme === MARS) return getColourMars();
-	if (scheme === GREYSCALE) return getColourGreyscale();
 	if (scheme === WATER) return getColourWater();
 	if (scheme === BEACH) return getColourBeach(x);
 	if (scheme === CANDY) return getColourCandy(x);
+	else return getColourGreyscale();
 }
 
 /* MAIN LOGIC */
