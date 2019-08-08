@@ -24,7 +24,7 @@ const WAVE_VARIANCE_NAME = "WaveVariance";
 const DEFAULT_WAVE_VARIANCE = 7;
 const MIN_WAVE_VARIANCE = 0;
 const MAX_WAVE_VARIANCE = 25;
-let waveVariance = 4;
+let waveVariance = DEFAULT_WAVE_VARIANCE;
 
 const COLOUR_SCHEME_NAME = "ColourScheme";
 const DESERT = "Desert";
