@@ -26,6 +26,14 @@ const MIN_WAVE_VARIANCE = 0;
 const MAX_WAVE_VARIANCE = 25;
 let waveVariance = 4;
 
+const COLOUR_SCHEME_NAME = "ColourScheme";
+const DESERT = "Desert";
+const MARS = "Mars";
+const GREYSCALE = "Greyscale";
+const WATER = "Water";
+const DEFAULT_COLOUR_SCHEME = DESERT;
+let colourScheme = DEFAULT_COLOUR_SCHEME;
+
 let waveWidth = 0;
 let pointGap = 0;
 
@@ -55,6 +63,13 @@ function getColourWater() {
 	let r = random(0, b / 4);
 	let g = random(b / 2, b * 2 / 3);
 	return color(r, g, b);
+}
+
+function getColour(scheme) {
+	if (scheme === DESERT) return getColourDesert();
+	if (scheme === MARS) return getColourMars();
+	if (scheme === GREYSCALE) return getColourGreyscale();
+	if (scheme === WATER) return getColourWater();
 }
 
 /* MAIN LOGIC */
@@ -111,7 +126,7 @@ function generateAndDrawWaves() {
 	for (let i = waves.length - 1; i >= 0; --i) {
 		let currentWave = waves[i];
 
-		let currentColour = getColourDesert();
+		let currentColour = getColour(colourScheme);
 		fill(currentColour);
 		stroke(currentColour);
 
@@ -167,9 +182,14 @@ function setup() {
 		document.getElementById(WAVE_VARIANCE_NAME);
 	waveVarianceInput.value = waveVariance.toString();
 
+	colourScheme = COLOUR_SCHEME_NAME in params
+		? params[COLOUR_SCHEME_NAME]
+		: DEFAULT_COLOUR_SCHEME;
+	document.getElementById(COLOUR_SCHEME_NAME).value = colourScheme;
+
 	let canvas = createCanvas(canvasWidth, canvasHeight);
 	canvas.parent("mycanvas");
-	background(getColourDesert());
+	background(getColour(colourScheme));
 
 	waveWidth = canvasWidth / (numWaves - 1);
 	pointGap = canvasHeight / (pointsPerWave - 1);
