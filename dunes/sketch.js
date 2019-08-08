@@ -32,6 +32,7 @@ const MARS = "Mars";
 const GREYSCALE = "Greyscale";
 const WATER = "Water";
 const BEACH = "Beach";
+const CANDY = "Candy";
 const DEFAULT_COLOUR_SCHEME = DESERT;
 let colourScheme = DEFAULT_COLOUR_SCHEME;
 
@@ -74,12 +75,21 @@ function getColourBeach(x) {
 	}
 }
 
+function getColourCandy(x) {
+	if (floor(x / waveWidth) % 2 === 0) {
+		return color(random(200, 256), random(20), random(20));
+	} else {
+		return color(random(230,256));
+	}
+}
+
 function getColour(scheme, x) {
 	if (scheme === DESERT) return getColourDesert();
 	if (scheme === MARS) return getColourMars();
 	if (scheme === GREYSCALE) return getColourGreyscale();
 	if (scheme === WATER) return getColourWater();
 	if (scheme === BEACH) return getColourBeach(x);
+	if (scheme === CANDY) return getColourCandy(x);
 }
 
 /* MAIN LOGIC */
