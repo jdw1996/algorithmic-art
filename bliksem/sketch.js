@@ -4,8 +4,8 @@ let GRADIENT_ARRAY = [
 	[20, 0.1], [12, 0.2], [7, 0.3], [5, 0.4], [4, 0.6], [3, 0.8], [1, 1]
 ];
 
-let lightning_colour = null;
-let background_colour = null;
+let lightningColour = null;
+let backgroundColour = null;
 let automaticBoltsCheckbox = null;
 
 class Bolt {
@@ -71,7 +71,7 @@ function drawBolts(centreX, centreY, numBolts) {
 			for (let i = 0; i < currentBolt.points.length - 1; ++i) {
 				strokeWeight(GRADIENT_ARRAY[j][0]);
 				stroke(lerpColor(
-					background_colour, lightning_colour, GRADIENT_ARRAY[j][1]
+					backgroundColour, lightningColour, GRADIENT_ARRAY[j][1]
 				));
 				line(
 					cos(currentBolt.points[i][0]) * currentBolt.points[i][1]
@@ -89,26 +89,26 @@ function drawBolts(centreX, centreY, numBolts) {
 }
 
 function fade() {
-	stroke(fade_colour);
-	fill(fade_colour);
+	stroke(fadeColour);
+	fill(fadeColour);
 	rect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
 }
 
 function setup() {
 	colorMode(RGB, 255, 255, 255, 1);
-	lightning_colour = color(255);
-	background_colour = color(77, 0, 102);
-	fade_colour = color(
-		red(background_colour),
-		green(background_colour),
-		blue(background_colour),
+	lightningColour = color(255);
+	backgroundColour = color(77, 0, 102);
+	fadeColour = color(
+		red(backgroundColour),
+		green(backgroundColour),
+		blue(backgroundColour),
 		0.5
 	);
 	automaticBoltsCheckbox = document.getElementById("automaticBolts");
 
 	let canvas = createCanvas(CANVAS_WIDTH, CANVAS_HEIGHT);
 	canvas.parent("mycanvas");
-	background(background_colour);
+	background(backgroundColour);
 
 	frameRate(1);
 
